@@ -1,2 +1,2 @@
 # LeetCodeOJ
-LeetCodeOJ
+www.leetcode.com
