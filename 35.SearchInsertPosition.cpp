@@ -1,33 +1,38 @@
+// Given a sorted array and a target value, return the index if the target is found. 
+// If not, return the index where it would be if it were inserted in order.
+// You may assume no duplicates in the array.
 
+// Here are few examples.
+// [1,3,5,6], 5 → 2
+// [1,3,5,6], 2 → 1
+// [1,3,5,6], 7 → 4
+// [1,3,5,6], 0 → 0
 
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
-        vector<int>::size_type sz = nums.size();
-        if (sz == 0) return -1;
+        if (nums.empty()) return -1;
         
-        int insertIndex = -1;
-        int begin = 0, end = (int)sz-1;
-        do
+        auto binarySearch = [&nums, target]() -> int 
         {
-            int mid = (begin + end)/2;
-            if (nums[mid] > target)
+            int low = 0, high = nums.size()-1;
+            while (low <= high)
             {
-                insertIndex = mid;
-                end = mid-1;
+                int mid = low + (high-low)/2;
+                if (nums[mid] == target)
+                    return mid;
+                else if (nums[mid] > target)
+                {
+                    high = mid-1;
+                }
+                else // nums[mid] < target
+                {
+                    low = mid+1;
+                }
             }
-            else if (nums[mid] < target)
-            {
-                insertIndex = mid+1;
-                begin = mid+1;
-            }
-            else // nums[mid] == target
-            {
-                insertIndex = mid;
-                break;
-            }
-        } while (begin <= end);
+            return low;
+        };
 
-        return insertIndex;
+        return binarySearch();
     }
 };
