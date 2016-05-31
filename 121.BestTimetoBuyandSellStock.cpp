@@ -11,13 +11,14 @@ public:
         int minPriceEndingHere = prices[0], maxProfitSofar = 0;
         for (vector<int>::size_type i = 1; i < sz; ++i)
         {
-            if (prices[i] > minPriceEndingHere)
+            int price = prices[i];
+            if (price > minPriceEndingHere)
             {
-                maxProfitSofar = std::max(maxProfitSofar, prices[i]-minPriceEndingHere);
+                maxProfitSofar = std::max(maxProfitSofar, price-minPriceEndingHere);
             }
             else
             {
-                minPriceEndingHere = prices[i];
+                minPriceEndingHere = price;
             }
         }
         return maxProfitSofar;
