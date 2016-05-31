@@ -36,3 +36,23 @@ public:
 
     }
 };
+
+
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+    if (n == 0) return {0};
+
+    std::vector<int> codes = {0, 1};
+    for (int bits = 2; bits <= n; ++bits)
+    {
+        int size = (int)codes.size();
+        for (int i = 0; i < size; ++i)
+        {
+            codes.emplace_back(codes[size-i-1]+size);
+        }
+    }
+
+    return codes;
+}
+};
