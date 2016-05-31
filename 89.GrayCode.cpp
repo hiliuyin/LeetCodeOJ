@@ -13,7 +13,7 @@
 
 class Solution {
 public:
-    vector<int> grayCode(int n) {
+vector<int> grayCode(int n) {
     if (n == 0) return {0};
 
     std::vector<int> codes = {0, 1};
@@ -28,7 +28,4 @@ public:
 
     return codes;
 }
-};
-
-
 };
