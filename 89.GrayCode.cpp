@@ -14,33 +14,6 @@
 class Solution {
 public:
     vector<int> grayCode(int n) {
-        
-    if (n <= 0) return{0};
-    if (n == 1) return{ 0, 1 };
-    if (n == 2) return{ 0, 1, 3, 2 };
-
-    std::vector<int> codes = { 0, 1, 3, 2 };
-    for (int i = 2; i < n; ++i)
-    {
-        int pow = std::pow(2, i);
-        int prevIndex = pow;
-        int startValue = pow;
-        int num = pow / 2;
-        for (int j = 1; j <= pow; ++j)
-        {
-            int code = codes[prevIndex - j];
-            codes.emplace_back(code + startValue);
-        }
-    }
-    return codes;
-
-    }
-};
-
-
-class Solution {
-public:
-    vector<int> grayCode(int n) {
     if (n == 0) return {0};
 
     std::vector<int> codes = {0, 1};
@@ -55,4 +28,7 @@ public:
 
     return codes;
 }
+};
+
+
 };
