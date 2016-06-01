@@ -14,6 +14,6 @@ public:
                 paths[i*n+j] = paths[(i-1)*n+j] + paths[i*n+j-1];
             }
         }
-        return paths[paths.size()-1];
+        return paths.back();
     }
 };
