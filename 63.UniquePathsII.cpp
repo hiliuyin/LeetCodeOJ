@@ -32,25 +32,26 @@ int uniquePathsWithObstacles(std::vector<std::vector<int>>& obstacleGrid) {
     {
         for (int j = 0; j < cols; ++j)
         {
+            int index = i*cols + j;
             if (obstacleGrid[i][j] == 1)
             {
-                paths[i*cols + j] = 0;
+                paths[index] = 0;
             }
             else
             {
                 if (i >= 1 && j >= 1)
-                    paths[i*cols + j] = paths[(i - 1)*cols + j] + paths[i*cols + (j - 1)];
+                    paths[index] = paths[index - cols] + paths[index - 1];
                 else if (i >= 1 && j == 0)
                 {
-                    paths[i*cols + j] = paths[(i - 1)*cols + j];
+                    paths[index] = paths[index - cols];
                 }
                 else if (i == 0 && j >= 1)
                 {
-                    paths[i*cols + j] = paths[i*cols + (j - 1)];
+                    paths[index] = paths[index - 1];
                 }
                 else
                 {
-                    paths[i*cols + j] = 1;
+                    paths[index] = 1;
                 }
             }
         }
