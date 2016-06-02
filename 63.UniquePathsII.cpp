@@ -61,3 +61,44 @@ int uniquePathsWithObstacles(std::vector<std::vector<int>>& obstacleGrid) {
 }
 
 };
+
+
+
+int uniquePathsWithObstacles(std::vector<std::vector<int>>& obstacleGrid) {
+    if (obstacleGrid.empty() || obstacleGrid[0].empty()) return 0;
+
+    const int rows = obstacleGrid.size();
+    const int cols = obstacleGrid[0].size();
+
+    std::vector<std::vector<int>> paths(obstacleGrid);
+
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
+            if (obstacleGrid[i][j] == 1)
+            {
+                paths[i][j] = 0;
+            }
+            else
+            {
+                if (i >= 1 && j >= 1)
+                    paths[i][j] = paths[i-1][j] + paths[i][j-1];
+                else if (i >= 1 && j == 0)
+                {
+                    paths[i][j] = paths[i-1][j];
+                }
+                else if (i == 0 && j >= 1)
+                {
+                    paths[i][j] = paths[i][j-1];
+                }
+                else
+                {
+                    paths[i][j] = 1;
+                }
+            }
+        }
+    }
+
+    return paths[rows-1][cols-1];
+}
