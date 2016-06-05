@@ -10,7 +10,12 @@ For example, if there are 4 stones in the heap, then you will never win the game
 no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.
 */
 
-// 1, 2, 3 必胜 
+// 1 2 3必胜
+// 4 必败
+// 5 6 7必胜
+// 8 必败
+// 9 10 11必胜 ...
+// 只要保证把必败策略留给对手即可，即把4的整数倍留给对手
 
 class Solution {
 public:
