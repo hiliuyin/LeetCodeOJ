@@ -10,21 +10,6 @@ Although the above answer is in lexicographical order, your answer could be in a
 
 class Solution {
 public:
-void helper(std::vector<std::string> &result, std::string s, std::string digits,
-            std::unordered_map<char, std::string> &digitsToLetters)
-{
-    if (digits.empty())
-    {
-        result.emplace_back(s);
-        return;
-    }
-
-    for (auto&& letter : digitsToLetters[digits[0]])
-    {
-        helper(result, s+letter, digits.substr(1), digitsToLetters);
-    }
-}
-
 std::vector<std::string> letterCombinations(std::string digits)
 {
     if (digits.empty()) return {};
@@ -37,7 +22,26 @@ std::vector<std::string> letterCombinations(std::string digits)
     
     std::vector<std::string> result;
     std::string s;
+    
+    std::function<void(std::vector<std::string>&, std::string, std::string, std::unordered_map<char, std::string>&)>
+    helper = [&](std::vector<std::string> &result, std::string s, std::string digits,
+                 std::unordered_map<char, std::string> &digitsToLetters)
+    {
+        if (digits.empty())
+        {
+            result.emplace_back(s);
+            return;
+        }
+        
+        for (auto&& letter : digitsToLetters[digits[0]])
+        {
+            helper(result, s+letter, digits.substr(1), digitsToLetters);
+        }
+    };
+    
     helper(result, s, digits, digitsToLetters);
     
     return result;
 }
+
+};
