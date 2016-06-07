@@ -23,6 +23,7 @@ ListNode *reverseKGroup(ListNode *head, int k) {
     if (head == nullptr || k <= 1) return head;
 
     ListNode dummyHead(0);
+    dummyHead.next = head;
     ListNode *beginK = head;
     ListNode *endK = head;
     ListNode *prevNode = &dummyHead;
