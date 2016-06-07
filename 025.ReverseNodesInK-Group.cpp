@@ -19,37 +19,33 @@ For k = 3, you should return: 3->2->1->4->5
  * };
  */
  
- ListNode *reverseKGroup(ListNode *head, int k) {
+ListNode *reverseKGroup(ListNode *head, int k) {
     if (head == nullptr || k <= 1) return head;
 
     ListNode dummyHead(0);
-    dummyHead.next = head;
-
-    ListNode *leftNode = head;
-    ListNode *rightNode = head;
+    ListNode *beginK = head;
+    ListNode *endK = head;
     ListNode *prevNode = &dummyHead;
     for (;;)
     {
         int steps = k;
-        while (rightNode != nullptr && steps-- > 0)
-            rightNode = rightNode->next;
+        while (endK != nullptr && steps-- > 0)
+            endK = endK->next;
+        if (steps > 0) break;
 
-        if (steps > 0)
-            break;
-
-        ListNode *pPrev = rightNode;
-        ListNode *pCurr = leftNode;
+        ListNode *pPrev = endK;
+        ListNode *pCurr = beginK;
         do {
             ListNode *pDummy = pCurr->next;
             pCurr->next = pPrev;
             pPrev = pCurr;
             pCurr = pDummy;
-        } while (pCurr != rightNode);
+        } while (pCurr != endK);
 
-        leftNode->next = rightNode;
+        beginK->next = endK;
         prevNode->next = pPrev;
-        prevNode = leftNode;
-        leftNode = rightNode;
+        prevNode = beginK;
+        beginK = endK;
     }
 
     return dummyHead.next;
