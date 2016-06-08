@@ -27,3 +27,21 @@ A linked list can be reversed either iteratively or recursively. Could you imple
     }
     return prev;
 }
+
+// Using recursive
+ListNode* reverseList(ListNode* head) {
+    if (head == nullptr || head->next == nullptr) return head;
+
+    std::function<ListNode*(ListNode*, ListNode*)> reverseHelper = [&](ListNode *curr, ListNode *prev) -> ListNode*
+    {
+        if (curr == nullptr) return prev;
+
+        ListNode *next = curr->next;
+        curr->next = prev;
+        prev = curr;
+
+        return reverseHelper(next, prev);
+    };
+
+    return reverseHelper(head, nullptr);
+}
