@@ -17,15 +17,13 @@ int jump(std::vector<int>& nums)
     if (nums.empty() || nums.size() == 1) return 0;
     
     int jumps = 1;
-    int takeOffIndex = 0;
-    int furthestSofar = nums[0];
-    for (;;)
+    for (int takeOffIndex = 0, furthestSofar = nums[0];;)
     {
         if (furthestSofar >= nums.size()-1)
             break;
 
         jumps++;
-        for (int i = takeOffIndex, iEnd = furthestSofar; i <= iEnd; ++i)
+        for (int i = takeOffIndex+1, iEnd = furthestSofar; i <= iEnd; ++i)
         {
             int furthestEndingHere = i+nums[i];
             if (furthestEndingHere > furthestSofar)
