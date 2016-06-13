@@ -13,7 +13,7 @@ int singleNumber(std::vector<int>& nums)
         if (m.find(*it) != m.end())
             m[*it]++;
         else
-            m[*it] = 0;
+            m[*it] = 1;
     }
     
     auto search = std::find_if(m.begin(), m.end(),
