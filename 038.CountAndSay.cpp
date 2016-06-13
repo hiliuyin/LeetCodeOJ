@@ -17,28 +17,22 @@ std::string countAndSay(int n)
     while (--n > 0)
     {
         std::string dummy;
-        char ch = num[0];
         int count = 1;
         for (int i = 0, iEnd = num.size(); i < iEnd; )
         {
             int j = i + 1;
             for (int jEnd = iEnd; j < jEnd; ++j)
             {
-                if (num[j] == ch)
-                    count++;
-                else
-                    break;
+                if (num[j] != num[i]) break;
+                count++;
             }
-            dummy.append(std::to_string(count));
-            dummy.append(1, ch);
+
+            dummy += std::to_string(count) + num[i];
 
             i = j;
-            ch = num[i];
             count = 1;
         }
-
         num = dummy;
     }
-
     return num;
 }
