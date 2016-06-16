@@ -8,58 +8,40 @@ Note:
 The solution is guaranteed to be unique.
 */
 
-
-
-
-int canCompleteCircuit(vector<int> &gas, vector<int> &cost)
+int canCompleteCircuit(std::vector<int>& gas, std::vector<int>& cost)
 {
     if (gas.size() != cost.size()) return -1;
-
-    int stationNum = (int)gas.size();
     
-    std::vector<int> gasRemaining;
-    for (int i = 0; i < gas.size(); ++i)
-    {
-        gasRemaining.push_back(gas[i] - cost[i]);
-    }
-
-    bool founded = false;
+    const int stationNum = (int)gas.size();
     int startingStation = -1;
-
-    for (int j = 0; j < stationNum; )
+    for (int i = 0; i < stationNum; )
     {
-        if (gasRemaining[j] < 0)
+        if (gas[i] - cost[i] < 0)
         {
-            ++j;
+            ++i;
             continue;
         }
         
-        startingStation = j;
+        startingStation = i;
         int k = startingStation;
         int netGas = 0;
-        do
+        for (;;)
         {
-            netGas += gasRemaining[k];
+            netGas += gas[k%stationNum] - cost[k%stationNum];
             
             if (netGas < 0)
             {
-                j = k+1;
+                i = k+1;
                 break;
             }
             
             ++k;
-            k = (k >= stationNum) ? (k%stationNum) : k;
-            
-            if (k == startingStation)
+            if (k%stationNum == startingStation)
             {
-                founded = true;
-                break;
+                return startingStation;
             }
-        } while (true);
-        
-        if (founded)
-            break;
+        }
     }
     
-    return founded ? startingStation : (-1);
+    return -1;
 }
