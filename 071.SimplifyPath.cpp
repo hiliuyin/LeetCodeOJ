@@ -1,9 +1,3 @@
-#include <iostream>
-#include <string>
-#include <stack>
-
-using namespace std;
-
 // Simplify Path
 // Given an absolute path for a file (Unix-style), simplify it.
 
@@ -18,12 +12,12 @@ using namespace std;
 // Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
 // In this case, you should ignore redundant slashes and return "/home/foo”.
 
-string simplifyPath(string path)
+std::string simplifyPath(std::string path)
 {
-    if (path.size() == 0) return path;
+    if (path.empty()) return path;
     
-    stack<string> S; // use stack to record the real path between every two slashes
-    for (int i = 0; i < path.size(); )
+    std::stack<std::string> S; // use stack to record the real path between every two slashes
+    for (int i = 0, iEnd = (int)path.size(); i < iEnd; )
     {
         if (path[i] == '/')  // meet slash，nothing to do
         {
@@ -33,10 +27,8 @@ string simplifyPath(string path)
         else if (path[i] == '.')
         {
             int ii = i;
-            while (ii < path.size())
+            while (ii < path.size() && path[ii] == '.')
             {
-                if (path[ii] != '.')
-                    break;
                 ++ii;
             }
             
@@ -48,12 +40,13 @@ string simplifyPath(string path)
                 }
                 else if (ii-i == 2)  // case of /.. return /
                 {
-                    if (!S.empty()) S.pop();
+                    if (!S.empty())
+                        S.pop();
                     i = ii;
                 }
                 else  // case of /... return /...
                 {
-                    S.push(string(path, i, ii-i));
+                    S.emplace(std::string(path, i, ii-i));
                     i = ii;
                 }
             }
@@ -65,7 +58,8 @@ string simplifyPath(string path)
                 }
                 else if (ii-i == 2 && path[ii] == '/')  // case of /../, return to the previous directory
                 {
-                    if (!S.empty()) S.pop();
+                    if (!S.empty())
+                        S.pop();
                     i = ii;
                 }
                 else  // case of /.history or /..history, just return /.history or /..history
@@ -77,7 +71,7 @@ string simplifyPath(string path)
                         ++ii;
                     }
                     
-                    S.push(string(path, i, ii-i));
+                    S.emplace(std::string(path, i, ii-i));
                     i = ii;
                 }
             }
@@ -91,22 +85,21 @@ string simplifyPath(string path)
                     break;
                 ++ii;
             }
-            S.push(string(path, i, ii-i));
-            
+            S.emplace(std::string(path, i, ii-i));
             i = ii;
         }
     }
     
-    string str;
-    if (S.empty()) str = "/";
-
+    std::string simpPath;
+    if (S.empty()) simpPath = "/";
+    
     while (!S.empty())
     {
-        str = "/" + S.top() + str;
+        simpPath = "/" + S.top() + simpPath;
         S.pop();
     }
     
-    return str;
+    return simpPath;
 }
 
 int main(int argc, const char * argv[])
