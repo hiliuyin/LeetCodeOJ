@@ -33,7 +33,6 @@ RandomListNode* copyRandomList(RandomListNode *head)
         else
         {
             auto randomLoc = p->random;
-            
             for (auto q = head, qCopy = dummyHead.next; q != nullptr; )
             {
                 if (q == randomLoc)
