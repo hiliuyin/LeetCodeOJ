@@ -12,6 +12,7 @@
  * };
  */
 
+// 方法一
 RandomListNode* copyRandomList(RandomListNode *head)
 {
     if (head == nullptr) return nullptr;
@@ -49,3 +50,45 @@ RandomListNode* copyRandomList(RandomListNode *head)
     return dummyHead.next;
 }
 
+// 方法二
+RandomListNode *copyRandomList(RandomListNode *head) {
+    if (head == nullptr) return head;
+    RandomListNode* pCur = head;
+    
+    //Copy the RandomListNode
+    // 1-2-3-4-5  ==> 1-1-2-2-3-3-4-4-5-5
+    while (pCur != nullptr)
+    {
+        RandomListNode* pNext = pCur->next;
+        pCur->next = new RandomListNode(pCur->label);
+        pCur->next->next = pNext;
+        pCur = pNext;
+    }
+    
+    //Add the random value for new RandomListNode
+    pCur = head;
+    while (pCur != nullptr)
+    {
+        RandomListNode* pNext = pCur->next->next;
+        if (pCur->random == nullptr)
+            pCur->next->random = nullptr;
+        else
+            pCur->next->random = pCur->random->next;
+        pCur = pNext;
+    }
+    
+    //split the list to two lists
+    RandomListNode* head2 = head->next;
+    RandomListNode* pCur2 = head2;
+    pCur = head;
+    while (pCur2 != nullptr)
+    {
+        pCur->next = pCur->next->next;
+        if (pCur2->next != nullptr)
+            pCur2->next = pCur2->next->next;
+        pCur = pCur->next;
+        pCur2 = pCur2->next;
+    }
+    
+    return head2;
+}
