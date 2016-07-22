@@ -20,6 +20,7 @@ Note: Recursive solution is trivial, could you do it iteratively?
  * };
  */
 
+// Solution 1: using std::stack
 std::vector<int> preorderTraversal(TreeNode* root)
 {
     std::vector<int> result;
@@ -42,6 +43,30 @@ std::vector<int> preorderTraversal(TreeNode* root)
             
             p = node->right;
         }
+    }
+    
+    return result;
+}
+
+// Solution 2: a more clear solution using std::stack
+std::vector<int> preorderTraversal(TreeNode* root)
+{
+    if (root == nullptr) return {};
+
+    std::vector<int> result;
+    std::stack<TreeNode*> S;
+    
+    S.push(root);
+    while (!S.empty())
+    {
+        auto node = S.top();
+        S.pop();
+        result.emplace_back(node->val);
+        
+        if (node->right != nullptr)
+            S.push(node->right);
+        if (node->left != nullptr)
+            S.push(node->left);
     }
     
     return result;
