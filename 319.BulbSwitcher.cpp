@@ -14,6 +14,11 @@ After third round, the three bulbs are [on, off, off].
 So you should return 1, because there is only one bulb is on.
 */
 
+// 其实就看i的因子个数，对于普通的数来说，因子都是成对出现的
+// 例如：8(1, 2, 4, 8), 10(1, 2, 5, 10)....
+// 但是对于 完全平方数 来说，因子个数是奇数的
+// 例如: 1(1), 4(1, 2, 4), 9(1, 3, 9), 16(1, 4, 16)...
+// 因此只要找到n以内的完全平方数的个数即可.
 int bulbSwitch(int n)
 {
     if (n <= 0) return 0;
