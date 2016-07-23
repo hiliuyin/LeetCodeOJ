@@ -10,6 +10,7 @@ Hint:
 Could you do it in-place with O(1) extra space?
 */
 
+// Solution 1: using std::reverse
 void rotate(std::vector<int>& nums, int k)
 {
     if (nums.size() < 1 || k <= 0) return;
@@ -28,4 +29,38 @@ void rotate(std::vector<int>& nums, int k)
     rotateHelper(nums, 0, nums.size() - k - 1);
     rotateHelper(nums, nums.size() - k, nums.size() - 1);
     rotateHelper(nums, 0, nums.size() - 1);
+}
+
+ // Solution 2:
+ // How to rotate [1,2,3,4,5,6,7] to [5,6,7,1,2,3,4]?
+ // [1->4], [4->7], [7->3], [3->6], [6->2], [2->5], [5->1]
+ void rotate(vector<int>& nums, int k)
+ {
+    if (nums.size() <= 1 || k <= 0) return;
+    
+    k = k % (int)nums.size();
+    
+    int from = 0;
+    int to = k;
+    int origin = 0;
+    int tmp1 = nums[0], tmp2;
+    for (int i = 0, iEnd = (int)nums.size(); i < iEnd; ++i)
+    {
+        tmp2 = nums[to];
+        nums[to] = tmp1;
+        tmp1 = tmp2;
+        
+        from = to;
+        
+        // consider circle!
+        // [abcdef] -> [cdefab]
+        // [a->e], [e->c], [c->a] ... [b->f], [f->d], [d->b]
+        if (from == origin)
+        {
+            origin = ++from;
+            tmp1 = nums[from];
+        }
+        
+        to = (from+k)%nums.size();
+    }
 }
