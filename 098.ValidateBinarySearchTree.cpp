@@ -27,12 +27,11 @@ Binary tree [1,2,3], return false.
  * };
  */
  
-bool isValidBST(TreeNode* root)
 {
     if (root == nullptr) return true;
-
+    
     std::stack<TreeNode*> S;
-    long long prevVal = (long long)INT_MIN - 1;
+    TreeNode *prev = nullptr;
     while (root != nullptr || !S.empty())
     {
         while (root != nullptr)
@@ -43,19 +42,19 @@ bool isValidBST(TreeNode* root)
         
         if (!S.empty())
         {
-            auto node = S.top();
+            auto curr = S.top();
             S.pop();
             
-            long long currVal = node->val;
-            if (currVal <= prevVal)
+            if (prev != nullptr && prev->val >= curr->val)
                 return false;
             
-            prevVal = currVal;
+            prev = curr;
             
-            root = node->right;
+            root = curr->right;
         }
     }
     
     return true;
 }
+
  
