@@ -27,6 +27,7 @@ Binary tree [1,2,3], return false.
  * };
  */
  
+bool isValidBST(TreeNode* root)
 {
     if (root == nullptr) return true;
     
@@ -44,17 +45,16 @@ Binary tree [1,2,3], return false.
         {
             auto curr = S.top();
             S.pop();
-            
             if (prev != nullptr && prev->val >= curr->val)
                 return false;
-            
+                
             prev = curr;
-            
             root = curr->right;
         }
     }
     
     return true;
 }
+
 
  
