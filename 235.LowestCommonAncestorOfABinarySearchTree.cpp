@@ -25,6 +25,8 @@ Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant o
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ 
+// Solution 1: recursive
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
 {
     if (root == nullptr || p == nullptr || q == nullptr) return nullptr;
@@ -40,4 +42,25 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
         return p;
     else // if (q->val == root->val)
         return q;
+}
+
+// Solution 2: iterative
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+{
+    if (root == nullptr || p == nullptr || q == nullptr) return nullptr;
+    
+    TreeNode* ancestor = root;
+    while (ancestor != nullptr)
+    {
+        if ((ancestor == p || ancestor == q)
+         || (ancestor->val > p->val && ancestor->val < q->val)
+         || (ancestor->val < p->val && ancestor->val > q->val))
+            break;
+        
+        if (ancestor->val < p->val && ancestor->val < q->val)
+            ancestor = ancestor->right;
+        else
+            ancestor = ancestor->left;
+    }
+    return ancestor;
 }
