@@ -10,6 +10,21 @@ Space complexity should be O(n).
 Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.
 */
 
+// Solution 1
+std::vector<int> countBits(int num)
+{
+    std::vector<int> result{0};
+    
+    for (int i = 1, j = 0; i <= num; ++i, ++j)
+    {
+        if ((i&(i-1)) == 0) j = 0;
+        result.emplace_back(result[j]+1);
+    }
+
+    return result;
+}
+
+// Solution 2
 std::vector<int> countBits(int num)
 {
     std::vector<int> result{0};
