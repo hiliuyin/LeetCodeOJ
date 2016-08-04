@@ -10,7 +10,7 @@ Hint:
 Could you do it in-place with O(1) extra space?
 */
 
-// Solution 1: using std::reverse
+// Solution 1: using std::swap
 void rotate(std::vector<int>& nums, int k)
 {
     if (nums.size() < 1 || k <= 0) return;
@@ -43,12 +43,10 @@ void rotate(std::vector<int>& nums, int k)
     int from = 0;
     int to = k;
     int origin = 0;
-    int tmp1 = nums[0], tmp2;
+    int temp = nums[from];
     for (int i = 0, iEnd = (int)nums.size(); i < iEnd; ++i)
     {
-        tmp2 = nums[to];
-        nums[to] = tmp1;
-        tmp1 = tmp2;
+        std::swap(temp, nums[to]);
         
         from = to;
         
@@ -58,9 +56,9 @@ void rotate(std::vector<int>& nums, int k)
         if (from == origin)
         {
             origin = ++from;
-            tmp1 = nums[from];
+            temp = nums[from];
         }
         
-        to = (from+k)%nums.size();
+        to = (from + k) % nums.size();
     }
 }
