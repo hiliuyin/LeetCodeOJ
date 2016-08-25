@@ -9,6 +9,8 @@ Given a list of non-negative integers representing the amount of money of each h
 determine the maximum amount of money you can rob tonight without alerting the police.
 */
 
+// DP problem
+// money[i] = std::max(money[i-1], money[i-2]+nums[i])
 int rob(std::vector<int>& nums)
 {
     if (nums.empty()) return 0;
