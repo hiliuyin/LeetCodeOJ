@@ -3,6 +3,11 @@ Given a string S, find the longest palindromic substring in S.
 You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
 */
 
+// Dynamic Programming
+// Let P[i][j] to indicate whether or not s[i....j] is a palindromic substring.
+// P[i][j] = P[i-1][j-1] if s[i]==s[j]
+//         = false       if s[i]!=s[j]
+
 class Solution {
 public:
 int P[1000][1000];
