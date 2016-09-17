@@ -7,21 +7,18 @@
 
 class Solution {
 public:
-    int removeDuplicates(std::vector<int>& nums) {
-        if (nums.empty()) return 0;
-
-        int currentVal = nums[0];
-        auto insertIt = nums.begin() + 1;
-        for (auto it = nums.begin() + 1; it != nums.end(); ++it)
+int removeDuplicates(std::vector<int>& nums)
+{
+    if (nums.size() <= 1) return (int)nums.size();
+    
+    int k = 1;
+    for (int i = 1, iEnd = (int)nums.size(); i < iEnd; ++i)
+    {
+        if (nums[i] != nums[i-1])
         {
-            if (*it != currentVal)
-            {
-                currentVal = *it;
-                *insertIt = currentVal;
-                insertIt++;
-            }
+            nums[k++] = nums[i];
         }
-        nums.erase(insertIt, nums.end());
-        return nums.size();
     }
+    return k;
+}
 };
