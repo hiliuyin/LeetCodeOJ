@@ -13,23 +13,21 @@ int removeDuplicates(std::vector<int>& nums)
 {
     if (nums.size() <= 2) return (int)nums.size();
     
-    int i = 0, j = 0;
-    int k = 0;
-    for (int iEnd = (int)nums.size(); i < iEnd; ++i)
+    int k = 1;
+    for (int i = 1, iEnd = (int)nums.size(), count = 1; i < iEnd; ++i)
     {
-        if (nums[i] != nums[j])
+        if (nums[i] == nums[i-1])
         {
-            nums[k++] = nums[j];
-            if (i-j >= 2)
-                nums[k++] = nums[j];
-            j = i;
+            count++;
+            if (count <= 2)
+                nums[k++] = nums[i];
+        }
+        else
+        {
+            nums[k++] = nums[i];
+            count = 1;
         }
     }
-    
-    // handle the tail elems
-    nums[k++] = nums[j];
-    if (i-j >= 2)
-        nums[k++] = nums[j];
 
     return k;
 }
