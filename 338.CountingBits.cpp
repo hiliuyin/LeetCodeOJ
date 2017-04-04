@@ -30,3 +30,13 @@ std::vector<int> countBits(int num)
     }
     return result;
 }
+
+// Solution 3
+std::vector<int> countBits(int num) {
+    std::vector<int> bits;
+    bits.reserve(static_cast<size_t>(num)+1);
+    for (int i = 0; i <= num; ++i) {
+        bits.emplace_back(__builtin_popcount(i));
+    }
+    return bits;
+}
