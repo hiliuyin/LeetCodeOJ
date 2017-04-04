@@ -11,28 +11,22 @@ Can you do it like a boss? Do it without using any builtin function like __built
 */
 
 // Solution 1
-std::vector<int> countBits(int num)
-{
-    std::vector<int> result{0};
-    
-    for (int i = 1, j = 0; i <= num; ++i, ++j)
-    {
-        if ((i&(i-1)) == 0) j = 0;
-        result.emplace_back(result[j]+1);
+std::vector<int> countBits(int num) {
+    std::vector<int> bits{0};
+    bits.reserve(static_cast<size_t>(num) + 1);
+    for (int i = 1, j = 0; i <= num; ++i, ++j) {
+        if ((i & (i-1)) == 0) j = 0;
+        bits.emplace_back(bits[j]+1);
     }
-
-    return result;
+    return bits;
 }
 
 // Solution 2
 std::vector<int> countBits(int num)
 {
     std::vector<int> result{0};
-    
-    for (int i = 1; i <= num; ++i)
-    {
+    for (int i = 1; i <= num; ++i) {
         result.emplace_back(result[(i-1)&i]+1);
     }
-    
     return result;
 }
