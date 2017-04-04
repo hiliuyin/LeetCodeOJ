@@ -7,10 +7,8 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int value = 0;
-        // for (auto&& num : nums) // in C++11
-        for (vector<int>::const_iterator it = nums.cbegin(); it != nums.cend(); ++it)
-        {
-            value ^= *it;
+        for (const auto& num : nums) {
+            value ^= num;
         }
         return value;
     }
