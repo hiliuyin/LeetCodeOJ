@@ -19,3 +19,11 @@ void moveZeroes(std::vector<int>& nums)
         }
     }
 }
+
+void moveZeroes(std::vector<int>& nums) {
+    std::size_t pos = 0;
+    for (std::size_t i = 0, iEnd = nums.size(); i < iEnd; ++i) {
+        if (nums[i] != 0)
+            std::swap(nums[pos++], nums[i]);
+    }
+}
