@@ -7,23 +7,14 @@ Given a = 1 and b = 2, return 3.
 
 int getSum(int a, int b)
 {
-    auto calSum = [](int x, int y)
-    {
-        int xorVal = 0;
-        int andVal = 0;
-        
-        while (y != 0)
-        {
-            xorVal = x ^ y;
-            andVal = x & y;
-            
-            andVal <<= 1;
-
-            x = xorVal;
-            y = andVal;
-        }
-
-        return xorVal;
+    auto calSum = [](int x, int y) {
+        int sum = x;
+        while (y != 0) {
+            sum = x^y;
+            y = (x&y) << 1;
+            x = sum;
+        };
+        return sum;
     };
     
     return calSum(a, b);
