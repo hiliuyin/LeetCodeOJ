@@ -12,6 +12,7 @@ Output: e
 Explanation: 'e' is the letter that was added.
 */
 
+// Solution 1: use std::unordered_map
 char findTheDifference(std::string s, std::string t)
 {
     std::unordered_map<char, int> M;
@@ -39,4 +40,20 @@ char findTheDifference(std::string s, std::string t)
         }
     }
     return t[j];
+}
+
+// Solution 2:
+char findTheDifference(std::string s, std::string t) {
+    std::vector<int> count(26);
+    for (const auto& ch : s) {
+        count[ch-'a']++;
+    }
+
+    char diff = '0';
+    for (const auto& ch : t) {
+        count[ch-'a']--;
+        if (count[ch-'a'] < 0)
+            diff = ch;
+    }
+    return diff;
 }
