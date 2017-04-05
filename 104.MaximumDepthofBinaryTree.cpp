@@ -13,9 +13,7 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if (root == NULL) return 0;
-        int leftTreeMaxDepth = maxDepth(root->left);
-        int rightTreeMaxDepth = maxDepth(root->right);
-        return (leftTreeMaxDepth > rightTreeMaxDepth) ? (leftTreeMaxDepth+1) : (rightTreeMaxDepth+1);
+        if (root == nullptr) return 0;
+        return std::max(maxDepth(root->left), maxDepth(root->right)) + 1;
     }
 };
