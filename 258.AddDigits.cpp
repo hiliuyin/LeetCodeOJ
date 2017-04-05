@@ -6,14 +6,10 @@ Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one
 
 Follow up:
 Could you do it without any loop/recursion in O(1) runtime?
-refer to:
-https://en.wikipedia.org/wiki/Digital_root
+refer to: https://en.wikipedia.org/wiki/Digital_root
 */
 
-class Solution {
-public:
-    int addDigits(int num) {
-        if (num < 10) return num;
-        return 1+(num-1)%9;
-    }
-};
+int addDigits(int num) {
+    if (num < 10) return num;
+    return 1+(num-1)%9;
+}
