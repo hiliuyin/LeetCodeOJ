@@ -30,3 +30,23 @@ std::vector<int> productExceptSelf(std::vector<int>& nums)
     
     return products;
 }
+
+//
+std::vector<int> productExceptSelf(std::vector<int>& nums) {
+    if (nums.empty()) return nums;
+    
+    std::vector<int> products(nums.size(), 1);
+    int val = 1;
+    for (int i = nums.size()-2; i >= 0; --i) {
+        products[i] = nums[i+1] * val;
+        val = products[i];
+    }
+    
+    val = 1;
+    for (int i = 1, iEnd = nums.size(); i < iEnd; ++i) {
+        val *= nums[i-1];
+        products[i] = products[i] * val;
+    }
+    
+    return products;
+}
