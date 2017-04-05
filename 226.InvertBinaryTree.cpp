@@ -32,6 +32,17 @@ TreeNode* invertTree(TreeNode* root)
     return root;
 }
 
+// A more simple method
+TreeNode* invertTree(TreeNode* root) {
+    if (root != nullptr) {
+        invertTree(root->left);
+        invertTree(root->right);
+        std::swap(root->left, root->right);
+    }
+    
+    return root;
+}
+
 // Solution 2: iteration
 TreeNode* invertTree(TreeNode* root)
 {
