@@ -3,18 +3,11 @@
 // You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times).
 // However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 
-class Solution {
-public:
-    int maxProfit(vector<int>& prices) {
-        std::vector<int>::size_type sz = prices.size();
-        if (sz <= 1) return 0;
-
-        int profit = 0;
-        for (std::vector<int>::size_type i = 0; i < sz -1; ++i)
-        {
-            if (prices[i] < prices[i+1])
-                profit += prices[i+1] - prices[i];
-        }
-        return profit;
+int maxProfit(vector<int>& prices) {
+    int profit = 0;
+    for (int i = 0, iEnd = prices.size()-1; i < iEnd; ++i) {
+        if (prices[i+1] > prices[i])
+            profit += prices[i+1] - prices[i];
     }
-};
+    return profit;
+}
