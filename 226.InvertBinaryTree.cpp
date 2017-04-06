@@ -19,12 +19,13 @@ TreeNode* invertTree(TreeNode* root)
     if (root == nullptr) return nullptr;
 
     std::swap(root->left, root->right);
-    if (root->left == nullptr)
+    if (root->left == nullptr) {
         invertTree(root->right);
-    else if (root->right == nullptr)
+    }
+    else if (root->right == nullptr) {
         invertTree(root->left);
-    else
-    {
+    }
+    else {
         invertTree(root->left);
         invertTree(root->right);
     }
@@ -35,33 +36,27 @@ TreeNode* invertTree(TreeNode* root)
 // A more simple method
 TreeNode* invertTree(TreeNode* root) {
     if (root != nullptr) {
-        invertTree(root->left);
-        invertTree(root->right);
+        (void)invertTree(root->left);
+        (void)invertTree(root->right);
         std::swap(root->left, root->right);
     }
-    
     return root;
 }
 
-// Solution 2: iteration
-TreeNode* invertTree(TreeNode* root)
-{
-    if (root == nullptr) return nullptr;
+// Solution 2: iteration    
+TreeNode* invertTree(TreeNode* root) {
+    if (root == nullptr) return root;
     
-    std::stack<TreeNode*> S;
-    S.push(root);
+    std::queue<TreeNode*> Q;
+    Q.emplace(root);
     
-    while (!S.empty())
-    {
-        auto node = S.top();
-        S.pop();
+    while (!Q.empty()) {
+        auto node = Q.front();
+        Q.pop();
         
         std::swap(node->left, node->right);
-        if (node->left != nullptr)
-            S.push(node->left);
-        if (node->right != nullptr)
-            S.push(node->right);
+        if (node->left != nullptr) Q.emplace(node->left);
+        if (node->right != nullptr) Q.emplace(node->right);
     }
-
     return root;
 }
