@@ -12,27 +12,14 @@ canConstruct("aa", "ab") -> false
 canConstruct("aa", "aab") -> true
 */
 
-bool canConstruct(string ransomNote, string magazine)
-{
-    std::unordered_map<char, int> M;
-    for (int i = 0, iEnd = (int)magazine.size(); i < iEnd; ++i)
-    {
-        if (M.find(magazine[i]) == M.end())
-            M[magazine[i]] = 1;
-        else
-            M[magazine[i]]++;
+bool canConstruct(string ransomNote, string magazine) {
+    std::unordered_map<char, int> m;
+    for (const auto& ch : magazine) {
+        ++m[ch];
+    }    
+    for (const auto& ch : ransomNote) {
+        if (m.find(ch) == m.end() || m[ch] <= 0) return false;
+        else --m[ch];
     }
-    
-    for (int i = 0, iEnd = (int)ransomNote.size(); i < iEnd; ++i)
-    {
-        auto it = M.find(ransomNote[i]);
-        if (it == M.end())
-            return false;
-        if (it->second == 0)
-            return false;
-        it->second--;
-    }
-    
     return true;
 }
-
