@@ -15,11 +15,10 @@ For example:
 class Solution {
 public:
     int titleToNumber(string s) {
-        int result = 0;
-        for (auto it = s.cbegin(); it != s.cend(); ++it)
-        {
-            result = result*26 + (*it - 'A' + 1);
+        int num = 0;
+        for (const auto& ch : s) {
+            num = num * 26 + (ch - 'A' + 1);
         }
-        return result;
+        return num;
     }
 };
