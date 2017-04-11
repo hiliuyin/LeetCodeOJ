@@ -10,12 +10,10 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 */
 
 // Solution 1: O(n) runtime complexity with O(n) space complexity.
-std::vector<int> singleNumber(std::vector<int>& nums)
-{
+std::vector<int> singleNumber(std::vector<int>& nums) {
     std::vector<int> result;
     std::unordered_map<int, int> M;
-    for (auto&& num : nums)
-    {
+    for (auto&& num : nums) {
         auto it = M.find(num);
         if (it == M.end())
             M[num] = 1;
@@ -23,8 +21,7 @@ std::vector<int> singleNumber(std::vector<int>& nums)
             M[num]++;
     }
     
-    for (auto&& m : M)
-    {
+    for (auto&& m : M) {
         if (m.second == 1)
             result.emplace_back(m.first);
     }
@@ -33,25 +30,19 @@ std::vector<int> singleNumber(std::vector<int>& nums)
 }
 
 // Solution 2: O(n) runtime complexity with constant space complexity
-std::vector<int> singleNumber(std::vector<int>& nums)
-{
-    int all_xor = 0;
-    for (auto&& num : nums)
-        all_xor ^= num; // all_xor holds x^y
-        
-    int mask = 1;
-    while ((mask & all_xor) == 0)
-        mask <<= 1;  // since x is different with y, use mask to diff these two numbers
-
+std::vector<int> singleNumber(std::vector<int>& nums) {
+    int val = 0;
+    for (const auto& num : nums) {
+        val ^= num;
+    }
+    val &= (~(val-1));
     int one = 0, other = 0;
-    for (auto&& num : nums)
-    {
-        if (num & mask)
+    for (const auto& num : nums) {
+        if ((num & val) != 0)
             one ^= num;
         else
             other ^= num;
     }
-    
     return {one, other};
 }
 
