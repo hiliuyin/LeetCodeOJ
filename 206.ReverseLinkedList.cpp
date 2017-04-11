@@ -13,22 +13,19 @@ A linked list can be reversed either iteratively or recursively. Could you imple
  * };
  */
  
- ListNode* reverseList(ListNode* head)
- {
-    if (head == nullptr || head->next == nullptr) return head;
-
-    ListNode *prev = nullptr;
-    for (ListNode *curr = head; curr != nullptr; )
-    {
-        ListNode *next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
+// Solution 1
+ListNode* reverseList(ListNode* head) {
+    ListNode* prev = nullptr;
+    while (head != nullptr) {
+        ListNode* next = head->next;
+        head->next = prev;
+        prev = head;
+        head = next;
     }
     return prev;
 }
 
-// Using recursive
+// Solution 2: Using recursive
 ListNode* reverseList(ListNode* head) {
     if (head == nullptr || head->next == nullptr) return head;
 
@@ -44,4 +41,12 @@ ListNode* reverseList(ListNode* head) {
     };
 
     return reverseHelper(head, nullptr);
+}
+
+ListNode* reverseList(ListNode* head) {
+    if (head == nullptr || head->next == nullptr) return head;
+    ListNode* node = reverseList(head->next);
+    head->next->next = head;
+    head->next = nullptr;
+    return node;
 }
