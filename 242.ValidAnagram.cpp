@@ -12,18 +12,14 @@ Follow up:
 What if the inputs contain unicode characters? How would you adapt your solution to such case?
 */
 
-class Solution {
-public:
-    bool isAnagram(string s, string t) {
-        if (s.size() != t.size()) return false;
+bool isAnagram(string s, string t) {
+    if (s.size() != t.size()) return false;
         
-        std::vector<int> sCount(26), tCount(26);
-        for (int i = 0, iEnd = s.size(); i < iEnd; ++i)
-        {
-            sCount[s[i]-'a']++;
-            tCount[t[i]-'a']++;
-        }
-        
-        return sCount == tCount;
+    std::vector<int> sVec(26), tVec(26);
+    for (int i = 0, iEnd = s.size(); i < iEnd; ++i) {
+        ++sVec[s[i]-'a'];
+        ++tVec[t[i]-'a'];
     }
-};
+
+    return sVec == tVec;
+}
