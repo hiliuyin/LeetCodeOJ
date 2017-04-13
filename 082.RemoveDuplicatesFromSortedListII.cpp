@@ -6,36 +6,23 @@ Given 1->2->3->3->4->4->5, return 1->2->5.
 Given 1->1->1->2->3, return 2->3.
 */
 
-ListNode* deleteDuplicates(ListNode* head)
-{
+ListNode* deleteDuplicates(ListNode* head) {
     if (head == nullptr || head->next == nullptr) return head;
-    
-    ListNode dummyHead(0);
-    dummyHead.next = head;
-    ListNode* p = &dummyHead;
-    ListNode* prev = head;
-    ListNode* curr = head->next;
-    while (curr != nullptr)
-    {
-        if (curr->val == prev->val)
-        {
-            prev->next = nullptr;
+        
+    ListNode dummy(0);
+    dummy.next = head;
+    for (ListNode* prev = &dummy, *curr = head; curr != nullptr && curr->next != nullptr; ) {
+        ListNode* node = curr->next;
+        if  (node->val != curr->val) {
+            prev = curr;
         }
-        else
-        {
-            if (prev == head) // handle the case: 1->2->.....
-                p = p->next;
-            
-            if (curr->next == nullptr || curr->val != curr->next->val)
-            {
-                p->next = curr;
-                p = curr;
+        else {
+            while (node != nullptr && node->val == curr->val) {
+                node = node->next;
+                prev->next = node;
             }
         }
-        prev = curr;
-        curr = curr->next;
+        curr = node;
     }
-    p->next = nullptr;
-    
-    return dummyHead.next;
+    return dummy.next;
 }
