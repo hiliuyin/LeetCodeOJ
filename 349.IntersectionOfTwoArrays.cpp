@@ -9,24 +9,14 @@ Each element in the result must be unique.
 The result can be in any order.
 */
 
-std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2)
-{
-    if (nums1.empty() || nums2.empty()) return {};
+std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2) {
+    std::unordered_set<int> s(nums1.begin(), nums1.end());
     
     std::vector<int> result;
-    std::unordered_set<int> s;
-    for (auto it = nums1.cbegin(); it != nums1.cend(); ++it)
-    {
-        s.emplace(*it);
-    }
-    
-    for (auto it = nums2.cbegin(); it != nums2.cend(); ++it)
-    {
-        auto search = s.find(*it);
-        if (search != s.end())
-        {
-            result.emplace_back(*it);
-            s.erase(search);
+    for (const auto& num : nums2) {
+        if (s.find(num) != s.end()) {
+            result.emplace_back(num);
+            s.erase(num);
         }
     }
     return result;
