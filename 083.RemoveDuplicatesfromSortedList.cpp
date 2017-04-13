@@ -6,27 +6,16 @@
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
-        if (head == nullptr) return nullptr;
+        if (head == nullptr || head->next == nullptr) return head;
         
-        ListNode* currentNode = head;
-        int currentVal = head->val;
-        for (ListNode* node = head->next; node != nullptr;)
-        {
-            if (node->val == currentVal)
-            {
-                ListNode* toDeleteNode = node;
-                node = node->next;
-                currentNode->next = node;
-                delete toDeleteNode;
+        for (ListNode* prev = head, *curr = head->next; curr != nullptr; curr = curr->next) {
+            if (curr->val != prev->val) {
+                prev = curr;
             }
-            else
-            {
-                currentNode = node;
-                currentVal = node->val;
-                node = node->next;
+            else {
+                prev->next = curr->next;
             }
         }
-        
         return head;
     }
 };
