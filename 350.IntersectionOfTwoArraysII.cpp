@@ -14,24 +14,15 @@ What if nums1's size is small compared to nums2's size? Which algorithm is bette
 What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
 */
 
-std::vector<int> intersect(std::vector<int>& nums1, std::vector<int>& nums2)
-{
-    if (nums1.empty() || nums2.empty()) return {};
-
-    std::vector<int> result;
-    std::unordered_multiset<int> s;
-    for (auto it = nums1.cbegin(); it != nums1.cend(); ++it)
-    {
-        s.emplace(*it);
-    }
+std::vector<int> intersect(std::vector<int>& nums1, std::vector<int>& nums2) {
+    std::unordered_multiset<int> s(nums1.begin(), nums1.end());
     
-    for (auto it = nums2.cbegin(); it != nums2.cend(); ++it)
-    {
-        auto search = s.find(*it);
-        if (search != s.end())
-        {
-            result.emplace_back(*it);
-            s.erase(search);
+    std::vector<int> result;
+    for (const auto& num : nums2) {
+        auto it = s.find(num);
+        if (it != s.end()) {
+            result.emplace_back(num);
+            s.erase(it);
         }
     }
     return result;
