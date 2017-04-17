@@ -8,11 +8,17 @@ Note:
 Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
 */
 
+// Solution 1
 int missingNumber(vector<int>& nums)
 {
     unsigned long long sum = 0;
-    for (auto&& num : nums)
+    for (const auto& num : nums)
         sum += num;
   
     return (nums.size()+1)*nums.size()/2 - sum;
+}
+
+// Solution 2: use std::accumulate
+int missingNumber(vector<int>& nums) {
+    return (nums.size() + 1) * nums.size()/2 - std::accumulate(nums.begin(), nums.end(), 0LL);
 }
