@@ -20,13 +20,12 @@ If there are lots of incoming S, say S1, S2, ... , Sk where k >= 1B, and you wan
 In this scenario, how would you change your code?
 */
 
+// Dynamic Programming problem
 // Greedy algorithm
-bool isSubsequence(string s, string t)
-{
+bool isSubsequence(string s, string t) {
     if (s.size() > t.size()) return false;
         
-    for (int i = 0, iEnd = (int)s.size(), pos = -1; i < iEnd; ++i)
-    {
+    for (int i = 0, iEnd = (int)s.size(), pos = -1; i < iEnd; ++i) {
         pos = t.find_first_of(s[i], pos+1);
         if (pos == std::string::npos)
             return false;
