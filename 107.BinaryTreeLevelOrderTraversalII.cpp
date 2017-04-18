@@ -16,8 +16,7 @@ return its bottom-up level order traversal as:
 ]
 */
 
-std::vector<std::vector<int>> levelOrderBottom(TreeNode* root)
-{
+std::vector<std::vector<int>> levelOrderBottom(TreeNode* root) {
     if (root == nullptr) return {};
     
     std::vector<std::vector<int>> result;
@@ -27,21 +26,17 @@ std::vector<std::vector<int>> levelOrderBottom(TreeNode* root)
     Q.push(root);
     Q.push(nullptr);
     
-    while (!Q.empty())
-    {
+    while (!Q.empty()) {
         auto node = Q.front();
         Q.pop();
-        if (node == nullptr)
-        {
+        if (node == nullptr) {
             result.emplace(result.begin(), level);
-            if (!Q.empty())
-            {
+            if (!Q.empty()) {
                 level.clear();
                 Q.push(nullptr);
             }
         }
-        else
-        {
+        else {
             level.emplace_back(node->val);
             if (node->left != nullptr)
                 Q.push(node->left);
