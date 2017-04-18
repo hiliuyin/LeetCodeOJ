@@ -6,8 +6,7 @@ Could you do it without using any loop / recursion?
 */
 
 // Solution 1: recursive solution
-bool isPowerOfThree(int n)
-{
+bool isPowerOfThree(int n) {
     if (n == 0) return false;
     while (n%3 == 0)
         n /= 3;
@@ -15,14 +14,12 @@ bool isPowerOfThree(int n)
 }
 
 // Solution 2:
-bool isPowerOfThree(int n)
-{
+bool isPowerOfThree(int n) {
     const int maxPowOfThree = 1162261467;
     return n > 0 && maxPowOfThree%n == 0;
 }
 
 // Solution 3:
-bool isPowerOfThree(int n)
-{
-    return std::fmod(std::log10(n)/std::log10(3), 1) == 0;
+bool isPowerOfThree(int n) {
+    return std::fmod<double>(std::log10(n)/std::log10(3), 1) == 0;
 }
