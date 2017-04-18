@@ -18,19 +18,15 @@ Note:
 Bonus points if you could solve it both recursively and iteratively.
 */
 
-bool isSymmetric(TreeNode* root)
-{
+bool isSymmetric(TreeNode* root) {
     if (root == nullptr) return true;
     
-    std::function<bool(TreeNode*, TreeNode*)> helper = [&](TreeNode *left, TreeNode *right) -> bool
-    {
+    std::function<bool(TreeNode*, TreeNode*)> helper = [&](TreeNode* left, TreeNode* right) {
         if (left == nullptr && right == nullptr) return true;
-        if (left == nullptr || right == nullptr) return false;
-        if (left->val == right->val)
-        {
-            return helper(left->left, right->right) && helper(left->right, right->left);
-        }
-        return false;
+        if (left == nullptr && right != nullptr) return false;
+        if (left != nullptr && right == nullptr) return false;
+        if (left->val != right->val) return false;
+        return helper(left->left, right->right) && helper(left->right, right->left);
     };
     
     return helper(root->left, root->right);
