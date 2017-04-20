@@ -6,26 +6,21 @@ Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
 Return: 1 --> 2 --> 3 --> 4 --> 5
 */
 
-ListNode* removeElements(ListNode* head, int val)
-{
-    if (head == nullptr) return nullptr;
+ListNode* removeElements(ListNode* head, int val) {
+    ListNode dummyHead(0);
+    dummyHead.next = head;
     
-    ListNode dummy(0);
-    dummy.next = head;
-    
-    ListNode* prev = &dummy;
-    ListNode* curr = head;
-    while (curr != nullptr)
-    {
-        if (curr->val == val)
-        {
-            prev->next = curr->next;
+    ListNode* prev = &dummyHead;
+    ListNode* p = head;
+    while (p != nullptr) {
+        if (p->val == val) {
+            prev->next = p->next;
         }
-        else
-        {
-            prev = curr;
+        else {
+            prev = p;
         }
-        curr = curr->next;
+        p = p->next;
     }
-    return dummy.next;
+    
+    return dummyHead.next;
 }
