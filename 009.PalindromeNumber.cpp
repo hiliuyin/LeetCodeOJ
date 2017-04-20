@@ -1,7 +1,6 @@
 // Determine whether an integer is a palindrome. Do this without extra space.
 
-class Solution {
-public:
+// Solution 1:
 bool isPalindrome(int x) {
     if (x < 0) return false;
     if (x == 0) return true;
@@ -31,4 +30,17 @@ bool isPalindrome(int x) {
     
     return reversedLeftPart == xRightPart;
 }
-};
+
+// Solution 2: use long long
+bool isPalindrome(int x) {
+    if (x < 0) return false;
+    
+    long long xCopy{x};
+    long long y = 0;
+    while (xCopy != 0) {
+        y = y*10 + xCopy%10;
+        xCopy /= 10;
+    }
+    
+    return y == x ? true : false;
+}
