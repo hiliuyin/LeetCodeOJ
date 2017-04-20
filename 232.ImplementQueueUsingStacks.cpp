@@ -11,44 +11,58 @@ Depending on your language, stack may not be supported natively. You may simulat
 You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).
 */
 
-class Queue {
+class MyQueue {
 public:
-    // Push element x to the back of queue.
-    void push(int x) {
-        sIn.push(x);
-    }
-
-    // Removes the element from in front of queue.
-    void pop(void) {
-        if (sOut.empty())
-        {
-            while (!sIn.empty())
-            {
-                sOut.push(sIn.top());
-                sIn.pop();
-            }
-        }
-        sOut.pop();
-    }
-
-    // Get the front element.
-    int peek(void) {
-        if (sOut.empty())
-        {
-            while (!sIn.empty())
-            {
-                sOut.push(sIn.top());
-                sIn.pop();
-            }
-        }
-        return sOut.top();
-    }
-
-    // Return whether the queue is empty.
-    bool empty(void) {
-        return sIn.empty() && sOut.empty();
+    /** Initialize your data structure here. */
+    MyQueue() {
+        
     }
     
-    std::stack<int> sIn;
-    std::stack<int> sOut;
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        inStack_.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        if (outStack_.empty()) {
+            while (!inStack_.empty()) {
+                outStack_.push(inStack_.top());
+                inStack_.pop();
+            }
+        }
+
+        int elem = outStack_.top();
+        outStack_.pop();
+        return elem;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        if (outStack_.empty()) {
+            while (!inStack_.empty()) {
+                outStack_.push(inStack_.top());
+                inStack_.pop();
+            }
+        }
+        return outStack_.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return inStack_.empty() && outStack_.empty();
+    }
+    
+private:
+    std::stack<int> inStack_;
+    std::stack<int> outStack_;
 };
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * bool param_4 = obj.empty();
+ */
