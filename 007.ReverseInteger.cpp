@@ -14,21 +14,11 @@ Update (2014-11-10):
 Test cases had been added to test the overflow behavior.
 */
 
-int reverse(int x)
-{
-    int sign = (x >= 0) ? 1 : -1;
-    long long xCopy = std::abs(x);
-    long long dummy = 0;
-    while (xCopy != 0)
-    {
-        dummy = dummy * 10 + xCopy % 10;
-        xCopy /= 10;
+int reverse(int x) {
+    long long result = 0;
+    while (x != 0) {
+        result = result*10 + x%10;
+         x /= 10;
     }
-    dummy = sign * dummy;
-
-    if (dummy < INT_MIN || dummy > INT_MAX)
-        return 0;
-    
-    return static_cast<int>(dummy);
+    return (result > INT_MAX || result < INT_MIN) ? 0 : result;
 }
-
