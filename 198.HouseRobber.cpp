@@ -11,8 +11,7 @@ determine the maximum amount of money you can rob tonight without alerting the p
 
 // DP problem
 // money[i] = std::max(money[i-1], money[i-2]+nums[i])
-int rob(std::vector<int>& nums)
-{
+int rob(std::vector<int>& nums) {
     if (nums.empty()) return 0;
     if (nums.size() == 1) return nums[0];
     if (nums.size() == 2) return std::max(nums[0], nums[1]);
@@ -20,8 +19,7 @@ int rob(std::vector<int>& nums)
     std::vector<int> money(nums.size());
     money[0] = nums[0];
     money[1] = std::max(nums[0], nums[1]);
-    for (int i = 2, iEnd = (int)money.size(); i < iEnd; ++i)
-    {
+    for (int i = 2, iEnd = (int)money.size(); i < iEnd; ++i) {
         money[i] = std::max(money[i-2]+nums[i], money[i-1]);
     }
     
