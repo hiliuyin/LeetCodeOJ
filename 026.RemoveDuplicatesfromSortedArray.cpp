@@ -5,20 +5,16 @@
 // Given input array nums = [1,1,2],
 // Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
 
-class Solution {
-public:
-int removeDuplicates(std::vector<int>& nums)
-{
-    if (nums.size() <= 1) return (int)nums.size();
+int removeDuplicates(std::vector<int>& nums) {
+    if (nums.size() <= 1) return nums.size();
     
-    int k = 1;
-    for (int i = 1, iEnd = (int)nums.size(); i < iEnd; ++i)
-    {
-        if (nums[i] != nums[i-1])
-        {
-            nums[k++] = nums[i];
+    int prev = nums[0];
+    int pos = 1;
+    for (int i = 1, iEnd = nums.size(); i < iEnd; ++i) {
+        if (nums[i] != prev) {
+            nums[pos++] = nums[i];
+            prev = nums[i];
         }
     }
-    return k;
+    return pos;
 }
-};
