@@ -5,54 +5,33 @@ Follow up:
 Could you do it in O(n) time and O(1) space?
 */
 
-bool isPalindrome(ListNode* head)
-{
-    if (head == nullptr) return true;
+bool isPalindrome(ListNode* head) {
+    if (head == nullptr || head->next == nullptr) return true;
     
-    auto findMid = [](ListNode* head) -> ListNode*
-    {
-        int count = 0;
-        for (auto p = head; p != nullptr; p = p->next)
-            ++count;
-        
-        if (count%2 == 0)
-            count = count/2;
-        else
-            count = count/2 + 1;
-        
-        ListNode* mid = head;
-        for (int i = 0; i < count; ++i)
-            mid = mid->next;
-
-        return mid;
-    };
+    int len = 0;
+    for (ListNode* p = head; p != nullptr; p = p->next)
+        ++len;
     
-    auto reverseList = [](ListNode* head) -> ListNode*
-    {
-        if (head == nullptr || head->next == nullptr) return head;
-        
+    ListNode* node = head;
+    for (int i = 0, iEnd = (len%2 == 0) ? len/2 : (len/2+1); i < iEnd; ++i)
+        node = node->next;
+    
+    auto reverseList = [&](ListNode* p){
         ListNode* prev = nullptr;
-        ListNode* curr = head;
-        while (curr != nullptr)
-        {
-            ListNode* temp = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = temp;
+        while (p != nullptr) {
+            ListNode* next = p->next;
+            p->next = prev;
+            prev = p;
+            p = next;
         }
         return prev;
     };
     
-    ListNode* mid = findMid(head);
-    ListNode* rList = reverseList(mid);
-    
-    while (rList != nullptr)
-    {
-        if (rList->val != head->val)
-            return false;
-        rList = rList->next;
+    ListNode* tail = reverseList(node);
+    for (int i = 0, iEnd = len/2; i < iEnd; ++i) {
+        if (head->val != tail->val) return false;
         head = head->next;
+        tail = tail->next;
     }
-    
-    return false;
+    return true;
 }
