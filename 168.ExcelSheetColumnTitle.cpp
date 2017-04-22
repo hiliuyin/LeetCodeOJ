@@ -11,15 +11,11 @@ For example:
     28 -> AB 
 */
 
-class Solution {
-public:
-    string convertToTitle(int n) {
-        std::string result;
-        while (n > 0)
-        {
-            result.insert(0, 1, (n-1)%26 + 'A');
-            n = (n-1)/26;
-        }
-        return result;
+string convertToTitle(int n) {
+    std::string result;
+    while (n > 0) {
+        result = static_cast<char>((n - 1)% 26 + 'A') + result;
+        n = (n-1) / 26;
     }
-};
+    return result;
+}
