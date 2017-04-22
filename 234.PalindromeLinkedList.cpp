@@ -8,14 +8,13 @@ Could you do it in O(n) time and O(1) space?
 bool isPalindrome(ListNode* head) {
     if (head == nullptr || head->next == nullptr) return true;
     
-    int len = 0;
-    for (ListNode* p = head; p != nullptr; p = p->next)
-        ++len;
-    
-    ListNode* node = head;
-    for (int i = 0, iEnd = (len%2 == 0) ? len/2 : (len/2+1); i < iEnd; ++i)
-        node = node->next;
-    
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast->next != nullptr && fast->next->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
     auto reverseList = [&](ListNode* p){
         ListNode* prev = nullptr;
         while (p != nullptr) {
@@ -27,11 +26,12 @@ bool isPalindrome(ListNode* head) {
         return prev;
     };
     
-    ListNode* tail = reverseList(node);
-    for (int i = 0, iEnd = len/2; i < iEnd; ++i) {
-        if (head->val != tail->val) return false;
+    slow->next = reverseList(slow->next);
+    slow = slow->next;
+    while (slow != nullptr) {
+        if (head->val != slow->val) return false;
         head = head->next;
-        tail = tail->next;
+        slow = slow->next;
     }
     return true;
 }
