@@ -10,25 +10,24 @@ Given s = "Hello World",
 return 5.
 */
 
-int lengthOfLastWord(std::string s)
-{
+int lengthOfLastWord(std::string s) {
     if (s.empty()) return 0;
     
-    int end = (int)s.size()-1;
-    for (; end >= 0; --end)
-    {
-        if (s[end] != ' ')
+    auto rit = s.rbegin();
+    while (rit != s.rend()) {
+        if (*rit == ' ')
+            ++rit;
+        else
             break;
     }
     
-    if (end < 0) return 0;
-
-    int begin = end;
-    for (; begin >= 0; --begin)
-    {
-        if (s[begin] == ' ')
-            break;
-    }
+    if (rit == s.rend()) return 0;
     
-    return end-begin;
+    int len = 0;
+    while (rit != s.rend()) {
+        if (*rit == ' ') break;
+        ++len;
+        ++rit;
+    }
+    return len;
 }
