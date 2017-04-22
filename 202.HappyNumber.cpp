@@ -10,13 +10,10 @@ Example: 19 is a happy number
 12 + 02 + 02 = 1
 */
 
-bool isHappy(int n)
-{
-    auto calc = [](int n) -> int
-    {
+bool isHappy(int n) {
+    auto calc = [](int n) -> int {
         int result = 0;
-        while (n != 0)
-        {
+        while (n != 0) {
             result += std::pow(n%10, 2);
             n = n/10;
         }
@@ -25,11 +22,9 @@ bool isHappy(int n)
     
     std::unordered_set<int> s{n};
     int val = n;
-    for (;;)
-    {
+    for (;;) {
         val = calc(val);
-        if (val == 1)
-            return true;
+        if (val == 1) return true;
         
         auto ret = s.emplace(val);
         if (!ret.second)
