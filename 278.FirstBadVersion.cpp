@@ -9,23 +9,14 @@ You are given an API bool isBadVersion(version) which will return whether versio
 Implement a function to find the first bad version. You should minimize the number of calls to the API.
 */
 
-int firstBadVersion(int n)
-{
-    int first = n;
+bool isBadVersion(int version);
+
+int firstBadVersion(int n) {
     int low = 1, high = n;
-    while (low <= high)
-    {
-        int mid = low + (high-low)/2;
-        if (isBadVersion(mid))
-        {
-            first = mid;
-            high = mid-1;
-        }
-        else
-        {
-            low = mid+1;
-        }
+    while (low <= high) {
+        int mid = low + (high - low)/2;
+        if (isBadVersion(mid)) high = mid - 1;
+        else low = mid + 1;
     }
-    
-    return first;
+    return low;
 }
