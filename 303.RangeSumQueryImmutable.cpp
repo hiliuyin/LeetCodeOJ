@@ -13,20 +13,20 @@ There are many calls to sumRange function.
 */
 
 class NumArray {
-    const std::size_t size_;
-    vector<int> sums_;
+    vector<int> sum_;
 
 public:
-    NumArray(vector<int> &nums) : size_(nums.size()), sums_(size_+1, 0)
-    {
-        for (int i = 0; i < (int)size_; ++i)
-        {
-            sums_[i+1] = sums_[i] + nums[i];
-        }
+    NumArray(vector<int> nums) : sum_(nums.size()+1, 0) {
+        for (int i = 0, iEnd = nums.size(); i < iEnd; ++i)
+            sum_[i+1] = sum_[i] + nums[i];
     }
 
-    int sumRange(int i, int j)
-    {
-        return sums_[j+1] - sums_[i];
+    int sumRange(int i, int j) {
+        return sum_[j+1] - sum_[i];
     }
 };
+
+// Your NumArray object will be instantiated and called as such:
+// NumArray numArray(nums);
+// numArray.sumRange(0, 1);
+// numArray.sumRange(1, 2);
