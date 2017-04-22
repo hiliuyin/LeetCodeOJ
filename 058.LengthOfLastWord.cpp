@@ -31,3 +31,12 @@ int lengthOfLastWord(std::string s) {
     }
     return len;
 }
+
+// use std::string APIs
+int lengthOfLastWord(std::string s) {
+    auto tail = s.find_last_not_of(' ');
+    if (tail == std::string::npos) return 0;
+    
+    auto head = s.find_last_of(' ', tail);
+    return head == std::string::npos ? tail+1 : tail-head;
+}
