@@ -7,37 +7,26 @@ b = "1"
 Return "100".
 */
 
-class Solution {
-public:
-std::string addBinary(std::string a, std::string b)
-{
+std::string addBinary(std::string a, std::string b) {
     if (a.empty()) return b;
     if (b.empty()) return a;
 
-    std::string s(std::max(a.size(), b.size())+1, '0');
+    std::string s;
     int i = a.size() - 1;
     int j = b.size() - 1;
-    int k = s.size() - 1;
     int carry = 0;
-    while (k >= 1)
+    while (i >= 0 || j >= 0 || carry == 1)
     {
         int digitA = (i >= 0) ? ((a[i] == '1') ? 1 : 0) : 0;
         int digitB = (j >= 0) ? ((b[j] == '1') ? 1 : 0) : 0;
         
-        int digit = digitA + digitB + carry;
-        carry = digit / 2;
-        s[k] = (digit % 2 == 1) ? '1' : '0';
+        int sum = digitA + digitB + carry;
+        carry = sum/2;
+        s = static_cast<char>((sum%2 == 1) ? '1' : '0') + s;
 
         i--;
         j--;
-        k--;
     }
-
-    if (carry != 0)
-        s[0] = '1';
-    else
-        s.erase(s.begin());
 
     return s;
 }
-};
