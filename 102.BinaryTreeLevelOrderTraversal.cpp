@@ -17,40 +17,31 @@ return its level order traversal as:
 */
 
 // BFS
-std::vector<std::vector<int>> levelOrder(TreeNode* root)
-{
+std::vector<std::vector<int>> levelOrder(TreeNode* root) {
     if (root == nullptr) return {};
-    
+
     std::vector<std::vector<int>> result;
     std::vector<int> level;
-    
-    std::queue<TreeNode*> Q;
-    Q.push(root);
-    Q.push(nullptr);
-    
-    while (!Q.empty())
-    {
-        auto node = Q.front();
-        Q.pop();
-        if (node == nullptr)
-        {
+    std::queue<TreeNode*> q;
+    q.push(root);
+    q.push(nullptr);
+    while (!q.empty()) {
+        auto node = q.front();
+        q.pop();
+        
+        if (node != nullptr) {
+            level.emplace_back(node->val);
+            if (node->left != nullptr) q.push(node->left);
+            if (node->right != nullptr) q.push(node->right);
+        }
+        else {
             result.emplace_back(level);
-            if (!Q.empty())
-            {
+            if (!q.empty()) {
                 level.clear();
-                Q.push(nullptr);
+                q.push(nullptr);
             }
         }
-        else
-        {
-            level.emplace_back(node->val);
-            if (node->left != nullptr)
-                Q.push(node->left);
-            if (node->right != nullptr)
-                Q.push(node->right);
-        }
     }
-    
     return result;
 }
 
