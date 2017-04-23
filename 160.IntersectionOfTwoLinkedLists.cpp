@@ -16,34 +16,45 @@ You may assume there are no cycles anywhere in the entire linked structure.
 Your code should preferably run in O(n) time and use only O(1) memory.
 */
 
-ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
-{
-    if (headA == nullptr || headB == nullptr) return nullptr;
-    
-    int lengthA = 0;
-    for (ListNode *p = headA; p != nullptr; p = p->next) lengthA++;
-    
-    int lengthB = 0;
-    for (ListNode *p = headB; p != nullptr; p = p->next) lengthB++;
-    
-    if (lengthA > lengthB)
-    {
-        int diff = lengthA - lengthB;
-        while (diff-- != 0)
-            headA = headA->next;
+// Solution 1:
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    int lenA = 0, lenB = 0;
+    ListNode* pA = headA, *pB = headB;
+    while (pA != nullptr) {
+        pA = pA->next;
+        ++lenA;
     }
-    else
-    {
-        int diff = lengthB - lengthA;
-        while (diff-- != 0)
-            headB = headB->next;
+    while (pB != nullptr) {
+        pB = pB->next;
+        ++lenB;
     }
-    
-    while (headA != headB)
-    {
-        headA = headA->next;
-        headB = headB->next;
+
+    pA = headA;
+    pB = headB;
+    if (lenA > lenB) {
+        while (lenA-- > lenB) {
+            pA = pA->next;
+        }
+    }
+    else if (lenB > lenA) {
+        while (lenB-- > lenA) {
+            pB = pB->next;
+        }
     }
     
-    return headA;
+    while (pA != pB) {
+        pA = pA->next;
+        pB = pB->next;
+    }
+    return pA;
+}
+
+// Solution 2: elegant and simple
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    ListNode* pA = headA, *pB = headB;
+    while (pA != pB) {
+        pA = pA == nullptr ? headB : pA->next;
+        pB = pB == nullptr ? headA : pB->next;
+    }
+    return pA;
 }
