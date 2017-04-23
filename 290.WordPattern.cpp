@@ -12,39 +12,28 @@ Notes:
 You may assume pattern contains only lowercase letters, and str contains lowercase letters separated by a single space.
 */
 
-bool wordPattern(std::string pattern, std::string str)
-{
+bool wordPattern(std::string pattern, std::string str) {
     std::vector<std::string> words;
     std::stringstream ss(str);
     std::string token;
-    while (getline(ss, token, ' '))
-    {
+    while (std::getline(ss, token, ' ')) {
         words.emplace_back(token);
     }
     
-    std::unordered_map<char, std::string> dict_pattern;
-    std::unordered_map<std::string, char> dict_word;
-    
     if (pattern.size() != words.size()) return false;
     
-    for (int i = 0, iEnd = (int)pattern.size(); i < iEnd; ++i)
-    {
-        
-        if (dict_pattern.find(pattern[i]) == dict_pattern.end())
-        {
-            dict_pattern[pattern[i]] = words[i];
+    std::unordered_map<char, std::string> m1;
+    std::unordered_map<std::string, char> m2;
+    for (int i = 0, iEnd = pattern.size(); i < iEnd; ++i) {
+        if (m1.find(pattern[i]) == m1.end()) {
+            m1[pattern[i]] = words[i];
+        }
+        if (m2.find(words[i]) == m2.end()) {
+            m2[words[i]] = pattern[i];
         }
         
-        if (dict_word.find(words[i]) == dict_word.end())
-        {
-            dict_word[words[i]] = pattern[i];
-        }
-        
-        if (dict_pattern[pattern[i]] != words[i] || dict_word[words[i]] != pattern[i])
-        {
+        if (m1[pattern[i]] != words[i] || m2[words[i]] != pattern[i])
             return false;
-        }
     }
-
     return true;
 }
