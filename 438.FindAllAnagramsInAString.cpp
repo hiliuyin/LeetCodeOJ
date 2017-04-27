@@ -27,7 +27,7 @@ The substring with start index = 1 is "ba", which is an anagram of "ab".
 The substring with start index = 2 is "ab", which is an anagram of "ab".
 */
 
-// Solution 1: O(n^2)
+// Solution 1: O(n^2) time complexity
 vector<int> findAnagrams(string s, string p) {
     std::vector<int> m(26, 0);
     for (const auto& ch : p) {
@@ -51,5 +51,27 @@ vector<int> findAnagrams(string s, string p) {
         }
         if (found) result.emplace_back(i);
     }
+    return result;
+}
+
+// Solution 2: O(n) time complexity
+vector<int> findAnagrams(string s, string p) {
+    if (s.size() < p.size()) return {};
+
+    std::vector<int> sv(26, 0);
+    std::vector<int> pv(26, 0);
+    std::vector<int> result;
+    for (int i = 0, iEnd = p.size(); i < iEnd; ++i) {
+        sv[s[i]-'a']++;
+        pv[p[i]-'a']++;
+    }
+    if (sv == pv) result.emplace_back(0);
+    
+    for (int i = p.size(), iEnd = s.size(); i < iEnd; ++i) {
+        sv[s[i]-'a']++;
+        sv[s[i-p.size()]-'a']--;
+        if (sv == pv) result.emplace_back(i-p.size()+1);
+    }
+    
     return result;
 }
