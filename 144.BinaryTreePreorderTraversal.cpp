@@ -21,26 +21,21 @@ Note: Recursive solution is trivial, could you do it iteratively?
  */
 
 // Solution 1: using std::stack
-std::vector<int> preorderTraversal(TreeNode* root)
-{
+std::vector<int> preorderTraversal(TreeNode* root) {
     std::vector<int> result;
     std::stack<TreeNode*> S;
     
     auto p = root;
-    while (p != nullptr || !S.empty())
-    {
-        while (p != nullptr)
-        {
+    while (p != nullptr || !S.empty()) {
+        while (p != nullptr) {
             result.emplace_back(p->val);
             S.push(p);
             p = p->left;
         }
         
-        if (!S.empty())
-        {
+        if (!S.empty()) {
             auto node = S.top();
             S.pop();
-            
             p = node->right;
         }
     }
@@ -49,25 +44,18 @@ std::vector<int> preorderTraversal(TreeNode* root)
 }
 
 // Solution 2: a more clear solution using std::stack
-std::vector<int> preorderTraversal(TreeNode* root)
-{
+std::vector<int> preorderTraversal(TreeNode* root) {
     if (root == nullptr) return {};
-
+    
     std::vector<int> result;
-    std::stack<TreeNode*> S;
-    
-    S.push(root);
-    while (!S.empty())
-    {
-        auto node = S.top();
-        S.pop();
+    std::stack<TreeNode*> s;
+    s.push(root);
+    while (!s.empty()) {
+        auto node = s.top();
+        s.pop();
         result.emplace_back(node->val);
-        
-        if (node->right != nullptr)
-            S.push(node->right);
-        if (node->left != nullptr)
-            S.push(node->left);
+        if (node->right != nullptr) s.push(node->right);
+        if (node->left != nullptr) s.push(node->left);
     }
-    
     return result;
 }
