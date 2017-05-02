@@ -11,35 +11,26 @@ All root-to-leaf paths are:
 ["1->2->5", "1->3"]
 */
 
-std::vector<std::string> binaryTreePaths(TreeNode* root)
-{
-    if (root == nullptr) return {};
-
+// solution 1: recursive
+std::vector<std::string> binaryTreePaths(TreeNode* root) {
     std::vector<std::string> result;
-    std::string path;
-
-    std::function<void(TreeNode*)> helper = [&](TreeNode* root)
-    {
+    std::string s;
+    std::function<void(TreeNode*, const std::string&)> helper =
+        [&](TreeNode* root, const std::string& path) {
         if (root == nullptr) return;
-        
-        path += std::to_string(root->val) + "->";
-        if (root->left == nullptr && root->right == nullptr)
-        {
-            result.emplace_back(path.substr(0, path.size()-2));
-        }
-        else
-        {
-            helper(root->left);
-            helper(root->right);
+
+        if (root->left == nullptr && root->right == nullptr) {
+            result.emplace_back(path + std::to_string(root->val));
+            return;
         }
         
-        path.pop_back();
-        path.pop_back();
-        auto pos = path.find_last_of(">");
-        path.erase(pos+1);
+        if (root->left != nullptr)
+            helper(root->left, path + std::to_string(root->val) + "->");
+        if (root->right != nullptr)
+            helper(root->right, path + std::to_string(root->val) + "->");
     };
     
-    helper(root);
-
+    helper(root, s);
     return result;
 }
+
