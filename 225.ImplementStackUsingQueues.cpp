@@ -11,70 +11,123 @@ Depending on your language, queue may not be supported natively. You may simulat
 You may assume that all operations are valid (for example, no pop or top operations will be called on an empty stack).
 */
 
-class Stack {
+// solution 1: use two queues
+class MyStack {
 public:
-    // Push element x onto stack.
+    /** Initialize your data structure here. */
+    MyStack() {
+        
+    }
+    
+    /** Push element x onto stack. */
     void push(int x) {
-        if (q1.empty()) q2.push(x);
-        else q1.push(x);
+        if (q1.empty()) {
+            q2.push(x);
+        }
+        else {
+            q1.push(x);
+        }
     }
-
-    // Removes the element on top of the stack.
-    void pop() {
-        if (q1.empty())
-        {
-            while (q2.size() > 1)
-            {
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        if (q1.empty()) {
+            while (q2.size() > 1) {
                 q1.push(q2.front());
                 q2.pop();
             }
-            q2.pop(); // the last one
-        }
-        else
-        {
-            while (q1.size() > 1)
-            {
-                q2.push(q1.front());
-                q1.pop();
-            }
-            q1.pop();
-        }
-    }
-
-    // Get the top element.
-    int top() {
-        if (q1.empty())
-        {
-            while (q2.size() > 1)
-            {
-                q1.push(q2.front());
-                q2.pop();
-            }
-            int val = q2.front();
-            q1.push(val);
+            int result = q2.front();
             q2.pop();
-            return val;
+            return result;
         }
-        else
-        {
-            while (q1.size() > 1)
-            {
+        else {
+            while (q1.size() > 1) {
                 q2.push(q1.front());
                 q1.pop();
             }
-            int val = q1.front();
-            q2.push(val);
+            int result = q1.front();
             q1.pop();
-            return val;
+            return result;
         }
     }
-
-    // Return whether the stack is empty.
+    
+    /** Get the top element. */
+    int top() {
+        if (q1.empty()) {
+            while (q2.size() > 1) {
+                q1.push(q2.front());
+                q2.pop();
+            }
+            int result = q2.front();
+            q1.push(result);
+            q2.pop();
+            return result;
+        }
+        else {
+            while (q1.size() > 1) {
+                q2.push(q1.front());
+                q1.pop();
+            }
+            int result = q1.front();
+            q2.push(result);
+            q1.pop();
+            return result;
+        }
+    }
+    
+    /** Returns whether the stack is empty. */
     bool empty() {
         return q1.empty() && q2.empty();
     }
-    
-    std::queue<int> q1;
-    std::queue<int> q2;
+
+private:
+    std::queue<int> q1, q2;
 };
+
+// solution 2: use one queue
+class MyStack {
+public:
+    /** Initialize your data structure here. */
+    MyStack() {
+        
+    }
+    
+    /** Push element x onto stack. */
+    void push(int x) {
+        que_.push(x);
+        for (int i = 0, iEnd = que_.size()-1; i < iEnd; ++i) {
+            que_.push(que_.front());
+            que_.pop();
+        }
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        int val = que_.front();
+        que_.pop();
+        return val;
+    }
+    
+    /** Get the top element. */
+    int top() {
+        return que_.front();
+    }
+    
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        return que_.empty();
+    }
+
+private:
+    std::queue<int> que_;
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * bool param_4 = obj.empty();
+ */
 
