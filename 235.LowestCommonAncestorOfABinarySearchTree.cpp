@@ -27,40 +27,24 @@ Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant o
  */
  
 // Solution 1: recursive
-TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
-{
-    if (root == nullptr || p == nullptr || q == nullptr) return nullptr;
-    
-    if ((p->val < root->val && q->val > root->val)
-     || (p->val > root->val && q->val < root->val))
-        return root;
-    else if (p->val < root->val && q->val < root->val)
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if (p->val < root->val && q->val < root->val)
         return lowestCommonAncestor(root->left, p, q);
     else if (p->val > root->val && q->val > root->val)
         return lowestCommonAncestor(root->right, p, q);
-    else if (p->val == root->val)
-        return p;
-    else // if (q->val == root->val)
-        return q;
+    return root;
 }
 
 // Solution 2: iterative
-TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
-{
-    if (root == nullptr || p == nullptr || q == nullptr) return nullptr;
-    
-    TreeNode* ancestor = root;
-    while (ancestor != nullptr)
-    {
-        if ((ancestor == p || ancestor == q)
-         || (ancestor->val > p->val && ancestor->val < q->val)
-         || (ancestor->val < p->val && ancestor->val > q->val))
-            break;
-        
-        if (ancestor->val < p->val && ancestor->val < q->val)
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    auto ancestor = root;
+    while (ancestor != nullptr) {
+        if (p->val < ancestor->val && q->val < ancestor->val)
+            ancestor = ancestor->left;
+        else if (p->val > ancestor->val && q->val > ancestor->val)
             ancestor = ancestor->right;
         else
-            ancestor = ancestor->left;
+            break;
     }
     return ancestor;
 }
