@@ -3,15 +3,12 @@ Given a string containing just the characters '(', ')', '{', '}', '[' and ']', d
 The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
 */
 
-class Solution {
-public:
-bool isValid(std::string s)
-{
+// solution 1: use std::string
+bool isValid(std::string s) {
     if (s.empty()) return false;
     
     std::string brackets;
-    for (int i = 0; i < s.size(); ++i)
-    {
+    for (int i = 0; i < s.size(); ++i) {
         if (s[i] == ')' && brackets.back() == '(')
             brackets.pop_back();
         else if (s[i] == ']' && brackets.back() == '[')
@@ -24,4 +21,23 @@ bool isValid(std::string s)
     
     return brackets.empty();
 }
-};
+
+// solution 2: use std::stack
+bool isValid(std::string s) {
+    if (s.empty()) return false;
+    
+    std::stack<char> paren;
+    for (const auto& ch : s) {
+        if (!paren.empty()) {
+            auto x = paren.top();
+            if ((ch == '}' && x == '{')
+            || (ch == ']' && x == '[')
+            || (ch == ')' && x == '(')) {
+                paren.pop();
+                continue;
+            }
+        }
+        paren.push(ch);
+    }
+    return paren.empty();
+}
