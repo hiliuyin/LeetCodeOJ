@@ -11,14 +11,10 @@ Could you do it in-place with O(1) extra space?
 */
 
 // Solution 1: using std::swap
-void rotate(std::vector<int>& nums, int k)
-{
+void rotate(std::vector<int>& nums, int k) {
     if (nums.size() < 1 || k <= 0) return;
-
-    auto rotateHelper = [](std::vector<int>& nums, int begin, int end)
-    {
-        while (begin < end)
-        {
+    auto rotateHelper = [](std::vector<int>& nums, int begin, int end) {
+        while (begin < end) {
             std::swap(nums[begin], nums[end]);
             ++begin;
             --end;
@@ -34,31 +30,22 @@ void rotate(std::vector<int>& nums, int k)
  // Solution 2:
  // How to rotate [1,2,3,4,5,6,7] to [5,6,7,1,2,3,4]?
  // [1->4], [4->7], [7->3], [3->6], [6->2], [2->5], [5->1]
- void rotate(vector<int>& nums, int k)
- {
+ void rotate(vector<int>& nums, int k) {
     if (nums.size() <= 1 || k <= 0) return;
-    
-    k = k % (int)nums.size();
-    
-    int from = 0;
-    int to = k;
+    const int sz = nums.size();
+    k %= sz;
+        
     int origin = 0;
+    int from = 0, to = k;
     int temp = nums[from];
-    for (int i = 0, iEnd = (int)nums.size(); i < iEnd; ++i)
-    {
+    for (int i = 0; i < sz; ++i) {
         std::swap(temp, nums[to]);
-        
         from = to;
-        
-        // consider circle!
-        // [abcdef] -> [cdefab]
-        // [a->e], [e->c], [c->a] ... [b->f], [f->d], [d->b]
-        if (from == origin)
-        {
-            origin = ++from;
+        if (from == origin) {
+            origin++;
+            from = origin;
             temp = nums[from];
         }
-        
-        to = (from + k) % nums.size();
+        to = (from + k) % sz;
     }
 }
