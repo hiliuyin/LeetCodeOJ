@@ -11,28 +11,26 @@ Given an integer n, generate the nth sequence.
 Note: The sequence of integers will be represented as a string.
 */
 
-std::string countAndSay(int n)
-{
-    std::string num("1");
-    while (--n > 0)
-    {
-        std::string dummy;
+string countAndSay(int n) {
+    if (n <= 0) return {};
+
+    std::string result{"1"};
+    for (int i = 1; i < n; ++i) {
+        std::string str;
+        char prev = result[0];
         int count = 1;
-        for (int i = 0, iEnd = num.size(); i < iEnd; )
-        {
-            int j = i + 1;
-            for (int jEnd = iEnd; j < jEnd; ++j)
-            {
-                if (num[j] != num[i]) break;
-                count++;
+        for (int k = 1, kEnd = result.size(); k < kEnd; ++k) {
+            if (result[k] == prev) {
+                ++count;
             }
-
-            dummy += std::to_string(count) + num[i];
-
-            i = j;
-            count = 1;
+            else {
+                str += std::to_string(count) + prev;
+                prev = result[k];
+                count = 1;
+            }
         }
-        num = dummy;
+        str += std::to_string(count) + prev;
+        result = str;
     }
-    return num;
+    return result;
 }
