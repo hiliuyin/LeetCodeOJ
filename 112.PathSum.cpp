@@ -13,11 +13,17 @@ Given the below binary tree and sum = 22,
 return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 */
 
-bool hasPathSum(TreeNode* root, int sum)
-{
+bool hasPathSum(TreeNode* root, int sum) {
     if (root == nullptr) return false;
-    
     if (root->left == nullptr && root->right == nullptr && root->val == sum) return true;
-    
     return hasPathSum(root->left, sum - root->val) || hasPathSum(root->right, sum - root->val);
+}
+
+bool hasPathSum(TreeNode* root, int sum) {
+    std::function<bool(TreeNode*, int)> helper = [&](TreeNode* node, int x) {
+        if (node == nullptr) return false;
+        if (node->left == nullptr && node->right == nullptr) return x + node->val == sum;
+        return helper(node->left, x + node->val) || helper(node->right, x + node->val);
+    };
+    return helper(root, 0);
 }
