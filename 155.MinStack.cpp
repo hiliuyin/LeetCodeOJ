@@ -24,44 +24,25 @@ public:
     }
     
     void push(int x) {
-        data_.emplace_back(x);
-        if (data_.size() == 1)
-        {
-            min_.push(x);
-        }
-        else
-        {
-            if (x < getMin())
-                min_.push(x);
-            else
-                min_.push(getMin());
-        }
+        data_.push(x);
+        if (min_.empty() || x <= getMin()) min_.push(x);
     }
     
     void pop() {
-        if (!data_.empty())
-        {
-            data_.erase(data_.begin() + data_.size() - 1);
-            min_.pop();
-        }
+        if (data_.top() == getMin()) min_.pop();
+        data_.pop();
     }
     
     int top() {
-        if (data_.empty())
-            return 0;
-    
-        return data_.back();
+        return data_.top();
     }
     
     int getMin() {
-        if (data_.empty())
-            return 0;
-
         return min_.top();
     }
-    
+
 private:
-    std::vector<int> data_;
+    std::stack<int> data_;
     std::stack<int> min_;
 };
 
