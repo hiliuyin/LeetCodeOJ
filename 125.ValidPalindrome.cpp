@@ -10,22 +10,17 @@ Have you consider that the string might be empty? This is a good question to ask
 For the purpose of this problem, we define empty string as valid palindrome.
 */
 
-bool isPalindrome(std::string s)
-{
-    for (int i = 0, j = s.size() - 1; i < j;)
-    {
-        while (i < (int)s.size() && !isalnum(s[i]))
-            i++;
-        while (j >= 0 && !isalnum(s[j]))
-            j--;
+bool isPalindrome(string s) {
+    int low = 0, high = s.size()-1, sz = s.size();
+    while (low < high) {
+        while (low < sz && !std::isalnum(s[low])) ++low;
+        if (low >= sz) break;
+        while (high >= 0 && !std::isalnum(s[high])) --high;
+        if (high < 0) break;
+        
+        if (low >= high) break;
 
-        if (i >= j)
-            break;
-
-        if (toupper(s[i++]) == toupper(s[j--]))
-            continue;
-        else
-            return false;
+        if (std::toupper(s[low++]) != std::toupper(s[high--])) return false;
     }
     return true;
 }
