@@ -4,24 +4,14 @@ find out whether there are two distinct indices i and j in the array such that n
 and the difference between i and j is at most k.
 */
 
-bool containsNearbyDuplicate(std::vector<int>& nums, int k)
-{
-    if (nums.size() <= 1) return false;
-
-    std::unordered_map<int, int> m;
-    for (int i = 0, iEnd = (int)nums.size(); i < iEnd; ++i)
-    {
-        auto it = m.find(nums[i]);
-        if (it != m.end())
-        {
-            if ((i - it->second) <= k)
-                return true;
-            m[nums[i]] = i;
+bool containsNearbyDuplicate(std::vector<int>& nums, int k) {
+    std::unordered_map<int, int> um;
+    for (int i = 0, iEnd = nums.size(); i < iEnd; ++i) {
+        auto it = um.find(nums[i]);
+        if (it != um.end()) {
+            if (i - it->second <= k) return true;
         }
-        else
-        {
-            m.emplace(nums[i], i);
-        }
+        um[nums[i]] = i;
     }
     return false;
 }
