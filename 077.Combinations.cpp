@@ -14,29 +14,20 @@ If n = 4 and k = 2, a solution is:
 ]
 */
 
-std::vector<std::vector<int>> combine(int n, int k)
-{
-    if (n <= 0 || k <= 0) return{};
-
-    std::function<void(std::vector<std::vector<int>>&, std::vector<int>, int, int, int)>
-        helper = [&](std::vector<std::vector<int>> &result, std::vector<int> vi, int start, int n, int k)
-    {
-        if (k == 0)
-        {
-            result.emplace_back(vi);
-            return;
+vector<vector<int>> combine(int n, int k) {
+    std::vector<std::vector<int>> res;
+    std::vector<int> v;
+    std::function<void(int, int)> helper = [&](int beg, int count) {
+        if (count == 0) {
+            res.emplace_back(v);
         }
-        for (int i = start; i <= n - k + 1; ++i)
-        {
-            vi.emplace_back(i);
-            helper(result, vi, i + 1, n, k - 1);
-            vi.pop_back();
+        for (int i = beg; i <= n; ++i) {
+            v.emplace_back(i);
+            helper(i+1, count-1);
+            v.pop_back();
         }
     };
 
-    std::vector<std::vector<int>> result;
-    std::vector<int> vi;
-    helper(result, vi, 1, n, k);
-
-    return result;
+    helper(1, k);
+    return res;
 }
