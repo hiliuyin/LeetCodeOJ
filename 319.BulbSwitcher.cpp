@@ -19,8 +19,9 @@ So you should return 1, because there is only one bulb is on.
 // 但是对于 完全平方数 来说，因子个数是奇数的
 // 例如: 1(1), 4(1, 2, 4), 9(1, 3, 9), 16(1, 4, 16)...
 // 因此只要找到n以内的完全平方数的个数即可.
-int bulbSwitch(int n)
-{
+// 如何得到完全平方数的个数呢？
+// n以内的完全平方数：1, 4, 9, ..., n，即：1， 2， 3， 4，... sqrt(n)
+int bulbSwitch(int n) {
     if (n <= 0) return 0;
     return static_cast<int>(std::sqrt(n));  
 }
