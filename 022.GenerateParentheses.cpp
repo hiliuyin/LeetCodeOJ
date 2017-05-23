@@ -11,36 +11,26 @@ For example, given n = 3, a solution set is:
 ]
 */
 
-class Solution {
-public:
-
-std::vector<std::string> generateParenthesis(int n)
-{
-    if (n <= 0) return {};
-
-    std::vector<std::string> result;
-    std::function<void(std::vector<std::string>&, std::string, int, int)> helper =
-    [&](std::vector<std::string> &result, std::string parth, int left, int right)
-    {
-        if (left == 0 && right == 0)
-        {
-            result.emplace_back(parth);
+vector<string> generateParenthesis(int n) {
+    std::vector<string> res;
+    
+    std::function<void(string, int, int)> helper = [&](string str, int l, int r) {
+        if (r == 0) {
+            res.emplace_back(str);
             return;
         }
         
-        if (left != 0)
-            helper(result, parth+"(", left-1, right);
+        if (l > 0) {
+            helper(str+"(", l-1, r);
+        }
         
-        if (left < right)
-            helper(result, parth+")", left, right-1);
-
+        if (l < r) {
+            helper(str+")", l, r-1);
+        }
     };
     
-    std::string parth;
+    std::string str;
+    helper(str, n, n);
     
-    helper(result, parth, n, n);
-    
-    return result;
+    return res;
 }
-
-};
