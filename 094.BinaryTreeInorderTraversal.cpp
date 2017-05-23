@@ -40,33 +40,23 @@ vector<int> inorderTraversal(TreeNode* root) {
 }
 
 // Solution 2: Using std::stack
-std::vector<int> inorderTraversal(TreeNode* root)
-{
+std::vector<int> inorderTraversal(TreeNode* root) {
     if (root == nullptr) return {};
-    
-    std::vector<int> result;
-    std::stack<TreeNode*> S;
-    auto p = root;
-    
-    while (p != nullptr || !S.empty())
-    {
-        while (p != nullptr)
-        {
-            S.push(p);
-            p = p->left;
+    std::vector<int> res;
+    std::stack<TreeNode*> s;
+    while (root != nullptr || !s.empty()) {
+        if (root != nullptr) {
+            s.push(root);
+            root = root->left;
         }
-    
-        if (!S.empty())
-        {
-            auto node = S.top();
-            S.pop();
-            result.emplace_back(node->val);
-        
-            p = node->right;
+        else {
+            auto node = s.top();
+            s.pop();
+            res.emplace_back(node->val);
+            root = node->right;
         }
     }
-    
-    return result;
+    return res;
 }
 
 // Solution 3: Iteratively?
