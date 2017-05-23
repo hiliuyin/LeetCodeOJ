@@ -42,29 +42,20 @@ std::vector<std::vector<int>> permute(std::vector<int>& nums)
 }
 
 // Another more clear recursive code
-std::vector<std::vector<int>> permute(std::vector<int>& nums)
-{
-    if (nums.empty()) return{};
+vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int>> res;
     
-    std::vector<std::vector<int>> result;
-    std::function<void(int, int)> helper = [&](int begin, int end)
-    {
-        if (begin > end)
-        {
-            result.emplace_back(nums);
-        }
-        else
-        {
-            for (int i = begin; i <= end; ++i)
-            {
-                std::swap(nums[begin], nums[i]);
-                helper(begin+1, end);
-                std::swap(nums[begin], nums[i]);
-            }
+    std::function<void(int)> helper = [&](int k) {
+        if (k == nums.size())
+            res.emplace_back(nums);
+        
+        for (int i = k, iEnd = nums.size(); i < iEnd; ++i) {
+            std::swap(nums[k], nums[i]);
+            helper(k+1);
+            std::swap(nums[k], nums[i]);
         }
     };
     
-    helper(0, (int)nums.size()-1);
-    
-    return result;
+    helper(0);
+    return res;
 }
