@@ -38,7 +38,7 @@ The size of the input list will be between 1 and 1000.
 Every integer represented in the list will be between -30000 and 30000.
 */
 
-// Solution 1: use stack
+// use stack
 int calPoints(vector<string>& ops) {
     std::stack<int> s;
     for (const auto& op : ops) {
