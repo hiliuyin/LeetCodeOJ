@@ -65,4 +65,25 @@ int calPoints(vector<string>& ops) {
     return sum;
 }
 
-
+// use vector
+int calPoints(vector<string>& ops) {
+    int sum = 0;
+    std::vector<int> scores;
+    for (const auto& op : ops) {
+        if (op == "C") {
+            sum -= scores.back();
+            scores.pop_back();
+        } else if (op == "D") {
+            sum += scores.back() * 2;
+            scores.emplace_back(scores.back() * 2);
+        } else if (op == "+") {
+            int score = scores.back() + scores[scores.size() - 2];
+            scores.emplace_back(score);
+            sum += score;
+        } else {
+            scores.emplace_back(stoi(op));
+            sum += scores.back();
+        }
+    }
+    return sum;
+}
